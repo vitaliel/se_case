@@ -24,4 +24,19 @@ class Gateway
     result = JSON.parse(response.body)
     result['data']
   end
+
+  def connect_session(customer_external_id)
+    raise ArgumentError if customer_id.blank?
+
+    data = { 'data' => {
+      'customer_id' => customer_external_id,
+      'consent' => {
+        'scopes' => %w[account_details transactions_details],
+        'from_date' => '2019-01-01'
+      }
+    }}
+    response = @api.request(:post, "#{BASE_URI}/customers/", data)
+    result = JSON.parse(response.body)
+    result['data']
+  end
 end
