@@ -1,8 +1,11 @@
 FactoryBot.define do
-  factory :connection do
+  factory :account do
     user
-    provider_name { 'Test Bank' }
-    provider_code { 'test_bank' }
-    sequence(:external_id) { |n| "22222#{n}" }
+    connection
+    name { 'Test account' }
+    nature { 'Card' }
+    balance { 100 }
+    currency_code { 'EUR' }
+    sequence(:external_id) { |n| "33333#{n}" }
   end
 end
