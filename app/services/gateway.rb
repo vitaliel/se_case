@@ -3,18 +3,12 @@ require 'saltedge'
 class Gateway
   BASE_URI = 'https://www.saltedge.com/api/v5'
 
-  def initialize
-    @api = Saltedge.new(
+  def initialize(api = nil)
+    @api = api || Saltedge.new(
       ENV.fetch("SE_APP_ID"),
       ENV.fetch("SE_SECRET"),
       ENV.fetch("SE_PRV_PEM_PATH"),
     )
-  end
-
-  def countries
-    response = @api.request(:get, "#{BASE_URI}/countries")
-    result = JSON.parse(response.body)
-    result['data']
   end
 
   def customer_register(customer_id)
@@ -47,7 +41,7 @@ class Gateway
 
     response = @api.request(:get, "#{BASE_URI}/connections?customer_id=#{customer_id}")
     result = JSON.parse(response.body)
-    p result
+    p result if Rails.env.development?
     result['data']
   end
 
@@ -56,7 +50,7 @@ class Gateway
 
     response = @api.request(:get, "#{BASE_URI}/accounts?connection_id=#{connection_id}")
     result = JSON.parse(response.body)
-    p result
+    p result if Rails.env.development?
     result['data']
   end
 
@@ -64,7 +58,7 @@ class Gateway
     raise ArgumentError if connection_id.blank? || account_id.blank?
     response = @api.request(:get, "#{BASE_URI}/transactions?connection_id=#{connection_id}&account_id=#{account_id}")
     result = JSON.parse(response.body)
-    p result
+    p result if Rails.env.development?
     result['data']
   end
 end
