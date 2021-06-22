@@ -1,0 +1,21 @@
+h1 Accounts
+
+.links
+  = link_to 'Connections', connections_path
+
+table
+  thead
+    tr
+      th ID
+      th Name
+      th Nature
+      th Balance
+      th Currency
+  tbody
+    - @items.each do |item|
+      tr
+        td = item['id']
+        td = link_to item.name, transactions_path(account_id: item.id)
+        td = item.nature
+        td = item.balance
+        td = item.currency_code

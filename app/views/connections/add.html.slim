@@ -1,0 +1,8 @@
+h1 Add new connection
+
+.content
+  .actions
+    = link_to 'Back', connections_path
+  - if @connect_url.present?
+    | Visit this url:
+    = link_to 'connect', @connect_url, target: :_blank

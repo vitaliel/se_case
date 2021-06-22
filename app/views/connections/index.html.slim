@@ -1,0 +1,16 @@
+h1 Connections
+
+= link_to 'Add connection', add_connections_path, method: :post
+
+table
+  thead
+    tr
+      th ID
+      th Code
+      th Name
+  tbody
+    - @items.each do |item|
+      tr
+        td = item['id']
+        td = item['provider_code']
+        td = link_to item['provider_name'], accounts_path(connection_id: item.id)

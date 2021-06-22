@@ -1,0 +1,26 @@
+h1 Transactions for #{@account.name}
+
+.links
+  = link_to 'Connections', connections_path
+  = link_to 'Accounts', accounts_path(connection_id: @account.connection_id)
+
+table
+  thead
+    tr
+      th ID
+      th Status
+      th Made on
+      th Amount
+      th Currency
+      th Category
+      th Description
+  tbody
+    - @items.each do |item|
+      tr
+        td = item.id
+        td = item.status
+        td = item.made_on
+        td = item.amount
+        td = item.currency_code
+        td = item.category
+        td = item.description
