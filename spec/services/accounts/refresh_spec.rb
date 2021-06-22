@@ -10,7 +10,7 @@ describe Accounts::Refresh do
         { 'id' => '3331', 'name' => 'Test account', 'balance' => 135, 'currency_code' => 'EUR', 'nature' => 'card' }
       ]
       gateway = double
-      expect(gateway).to receive(:connections).with(connection.external_id).and_return(data)
+      expect(gateway).to receive(:accounts).with(connection.external_id).and_return(data)
       described_class.new(user, connection, gateway).call
       expect(user.accounts.count).to eq 1
       account = user.accounts.first
