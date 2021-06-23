@@ -28,6 +28,9 @@ set :puma_env, 'development'
 set :rvm_ruby_version, File.read("#{__dir__}/../.ruby-version").strip
 set :ssh_options, forward_agent: true, user: fetch(:user), keys: %w[~/.ssh/id_rsa.pub]
 
+# https://github.com/capistrano/bundler
+set :bundle_without, %w{test}.join(':')
+
 ## Defaults:
 # set :scm,           :git
 # set :branch,        :master
@@ -68,12 +71,12 @@ namespace :deploy do
     end
   end
 
-  # desc 'Restart application'
-  # task :restart do
-  #   on roles(:app), in: :sequence, wait: 5 do
-  #     execute "sv restart ~/service/#{fetch(:application)}"
-  #   end
-  # end
+  desc 'Restart application'
+  task :restart do
+    on roles(:app), in: :sequence, wait: 5 do
+      execute "sv restart ~/service/#{fetch(:application)}"
+    end
+  end
 
   before :starting, :check_revision
   after :finishing, :compile_assets
