@@ -12,4 +12,6 @@ Rails.application.routes.draw do
   resources :transactions, only: :index
 
   root to: 'connections#index'
+
+  post '/callbacks/success', to: 'callbacks#success'
 end

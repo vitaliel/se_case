@@ -45,6 +45,15 @@ class Gateway
     result['data']
   end
 
+  def connection_show(connection_id)
+    raise ArgumentError if connection_id.blank?
+
+    response = @api.request(:get, "#{BASE_URI}/connections/#{connection_id}")
+    result = JSON.parse(response.body)
+    p result if Rails.env.development?
+    result['data']
+  end
+
   def connection_refresh(customer_id)
     raise ArgumentError if customer_id.blank?
 
