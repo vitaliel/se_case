@@ -45,6 +45,16 @@ class Gateway
     result['data']
   end
 
+  def connection_refresh(customer_id)
+    raise ArgumentError if customer_id.blank?
+
+    data = { data: { attempt: { fetch_scopes: %w[accounts transactions] } } }
+    response = @api.request(:put, "#{BASE_URI}/connections/#{customer_id}/refresh", data)
+    result = JSON.parse(response.body)
+    p result if Rails.env.development?
+    result['data']
+  end
+
   def accounts(connection_id)
     raise ArgumentError if connection_id.blank?
 
