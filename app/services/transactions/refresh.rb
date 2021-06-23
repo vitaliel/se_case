@@ -16,7 +16,20 @@ module Transactions
       rescue StandardError => e
         Rails.logger.error e
       end
+      save_transactions(items)
 
+      items = []
+
+      begin
+        items = gateway.transactions_pending(account.connection.external_id, account.external_id)
+      rescue StandardError => e
+        Rails.logger.error e
+      end
+      account.transactions.pending.delete_all
+      save_transactions(items)
+    end
+
+    def save_transactions(items)
       items.each do |item|
         txn = Transaction.where(external_id: item['id']).first
         txn ||= Transaction.new(account: account, external_id: item['id'])

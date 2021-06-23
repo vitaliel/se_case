@@ -61,4 +61,12 @@ class Gateway
     p result if Rails.env.development?
     result['data']
   end
+
+  def transactions_pending(connection_id, account_id)
+    raise ArgumentError if connection_id.blank? || account_id.blank?
+    response = @api.request(:get, "#{BASE_URI}/transactions/pending?connection_id=#{connection_id}&account_id=#{account_id}")
+    result = JSON.parse(response.body)
+    p result if Rails.env.development?
+    result['data']
+  end
 end

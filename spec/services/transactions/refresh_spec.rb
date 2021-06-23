@@ -22,6 +22,10 @@ describe Transactions::Refresh do
         connection.external_id,
         account.external_id
       ).and_return(data)
+      expect(gateway).to receive(:transactions_pending).with(
+        connection.external_id,
+        account.external_id
+      ).and_return([])
       described_class.new(user, account, gateway).call
       expect(account.transactions.count).to eq 1
       txn = account.transactions.first

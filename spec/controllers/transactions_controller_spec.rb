@@ -17,6 +17,7 @@ describe TransactionsController do
       gateway = double
       expect(controller).to receive(:gateway).and_return(gateway)
       expect(gateway).to receive(:transactions).and_return([])
+      expect(gateway).to receive(:transactions_pending).and_return([])
 
       get :index, params: { account_id: account.id }
       expect(response).to have_http_status(200)
